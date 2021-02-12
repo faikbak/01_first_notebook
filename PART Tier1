@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+import matplotlib as plt
+from scipy import stats
+import random
+import csv
+import signal
+with open("googleplaystore.csv") as g:
+    google=g
+Google = pd.read_csv('googleplaystore.csv')
+Google=Google[['Category', 'Rating', 'Reviews', 'Price']]
+Google.head()
+
+Google=Google[Google['Price']!='Everyone']
+
+nosymb=Google['Price'].str.replace('$','')
+Google['Price'] = pd.to_numeric(nosymb)
+
+Google['Reviews'] = pd.to_numeric(Google['Reviews'])
+Google['Reviews'].unique()
+with open("googleplaystore.csv") as a:
+    apple=a
+Apple = pd.read_csv('googleplaystore.csv')
+Apple=Apple[['Category', 'Rating', 'Reviews', 'Price']]
+Apple['platform'] = 'apple'
+old_names=Apple.columns
+Apple=Apple.rename(columns = {'Category':'A','Rating':'B','Reviews':'C','Price':'D','platform':'E'})
+Apple.head(3)
+counter=0
+signal=('10 3 25 4 30 2 17')
+
+other_signal=("4 6 4 5 3")
+other_signal=signal.split( )
+while(other_signal!=""):
+    newsignal=input()
+    other_signal_int[i]=int(other_signal[i])
+    if(other_signal_int[i]==newsignal):
+        counter+=1
+        print(counter)
