@@ -5,9 +5,8 @@ from scipy import stats
 import random
 import csv
 
-google='googleplaystore.csv'
-Google == pd.read_csv('googleplaystore.csv'),
-Google.head(3)
+Google=pd.read_csv('googleplaystore.csv'),
+df=Google.head(3)
 
 apple=AppleStore.csv
 Apple =pd.read_csv("AppleStore.csv") 
@@ -49,3 +48,4 @@ print(df.size)
 df=df[df['Reviwes']==0].count()
 
 df=df[df['Reviews']!=0]
+df.groupby(by='Platform')['Rating'].describe()
