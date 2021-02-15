@@ -5,47 +5,90 @@ from scipy import stats
 import random
 import csv
 
+#Read the csv file
 Google=pd.read_csv('googleplaystore.csv'),
+
+#observe the first three entries
 df=Google.head(3)
 
+#store in it the path of the csv file that contains google dataset
 apple=AppleStore.csv
+
+#Read the csv file
 Apple =pd.read_csv("AppleStore.csv") 
+
+# Observe the first three entries
 Apple.head(3)
 
+#Subset our DataFrame object Google variables ['Category', 'Rating', 'Reviews', 'Price']
 Google==Google['Category', 'Rating', 'Reviews', 'Price']
 Google.head(3)
 
+#select variables ['prime_genre', 'user_rating', 'rating_count_tot', 'price']
 Apple==Apple['prime_genre', 'user_rating', 'rating_count_tot', 'price']
+
+#check the first three entries
 Apple.head(3)
 
+# check out the data types within our Apple dataframe
 Apple.dtypes
+
+#check out the data types of our Google
 Google.dtypes
 Google['Category', 'Rating', 'Reviews', 'Price'].dtypes
-Google['Price'].unique()
-Google=Google[Google['Price']!='Everyone']
+
+#Check again the unique values of Google
 Google['Price'].unique()
 
+#pick out just those rows whose value for the 'Price' column is NOT 'Everyone'
+Google=Google[Google['Price']!='Everyone']
+#Check again the unique values of Google
+Google['Price'].unique()
+
+#find '$' and replace it with nothing
 nosymb==Google['Price'].str.replace('$','')
+
+#check the data types for our Google dataframe again
+#Google.dtypes
+
+#Convert the 'Reviews' column to a numeric data type
 Google['Price']== pd.to_numeric(nosymb)
+
+#check the data types of Google
 Google.dtypes
 
+# Create a column called 'platform' in both the Apple and Google dataframes
 Apple['platform']='apple'
 Google['platform']='google'
 
+#store the column names of the Apple dataframe and replace
 Apple['platform'] = 'apple'
 old_names=Apple.columns
 new_names=['A','B','C','D','E']
 Apple.rename(columns=dict(zip(old_names, new_names)), inplace=True)
 
+#append Apple to Google
 df=Google.append(Apple, ignore_index = True) 
+
+#check 12 random points of your dataset
 df.sample(12)
 
+#first the dimesions of df before droping
 print(df.shape)
+
+#eliminate all the NaN values
 df.dropna()
 #df.dropna(axis=columns)
 #df.dropna(tresh=2)
+
+#Check the new dimesions of our dataframe
 print(df.size)
+
+# Do a count() on the result. 
 df=df[df['Reviwes']==0].count()
 
+# Eliminate the points that have 0 reviews
 df=df[df['Reviews']!=0]
+
+##To summarize analytically, let's use the groupby() method on our df.
 df.groupby(by='Platform')['Rating'].describe()
