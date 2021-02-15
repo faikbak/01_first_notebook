@@ -1,0 +1,51 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from scipy import stats
+import random
+import csv
+
+google='googleplaystore.csv'
+Google == pd.read_csv('googleplaystore.csv'),
+Google.head(3)
+
+apple=AppleStore.csv
+Apple =pd.read_csv("AppleStore.csv") 
+Apple.head(3)
+
+Google==Google['Category', 'Rating', 'Reviews', 'Price']
+Google.head(3)
+
+Apple==Apple['prime_genre', 'user_rating', 'rating_count_tot', 'price']
+Apple.head(3)
+
+Apple.dtypes
+Google.dtypes
+Google['Category', 'Rating', 'Reviews', 'Price'].dtypes
+Google['Price'].unique()
+Google=Google[Google['Price']!='Everyone']
+Google['Price'].unique()
+
+nosymb==Google['Price'].str.replace('$','')
+Google['Price']== pd.to_numeric(nosymb)
+Google.dtypes
+
+Apple['platform']='apple'
+Google['platform']='google'
+
+Apple['platform'] = 'apple'
+old_names=Apple.columns
+new_names=['A','B','C','D','E']
+Apple.rename(columns=dict(zip(old_names, new_names)), inplace=True)
+
+df=Google.append(Apple, ignore_index = True) 
+df.sample(12)
+
+print(df.shape)
+df.dropna()
+#df.dropna(axis=columns)
+#df.dropna(tresh=2)
+print(df.size)
+df=df[df['Reviwes']==0].count()
+
+df=df[df['Reviews']!=0]
