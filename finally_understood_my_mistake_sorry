@@ -86,18 +86,21 @@ df.dropna()
 print(df.size)
 
 # Do a count() on the result. 
-df=df[df['Reviews']==0].count()
+df=df[df['Reviews']!=0].count()
 
 # Eliminate the points that have 0 reviews
-#df=df[df['Reviews']!=0]
+df=[df['Reviews']!=0]
 
 #To summarize analytically, let's use the groupby() method on our df.
-#df.groupby('Rating')('platform').describe()
+#df.groupby('platform','Rating').describe()
+
+# Call the boxplot() method on our df.
+#df.boxplot(by='platform', columns =['Rating'], grid=False, rot=45, fontsize=15)
 
 #PART3
 # Call the subsets 'apple' and 'google'
 google = df[df['platform'] == 'google']['Rating']
-apple = df[df['platform'] == 'apple']['Rating']
+apple = df[df['platform'] == ['apple']]['Rating']
 
 #get an indication of whether the apple data are normally distributed
 #the data are normally distributed, the lower the p-value in the result of this test, the more likely the data are to be non-normal.
@@ -141,4 +144,6 @@ obs_difference = np.mean(apple)-np.mean(google)
 obs_difference =abs(obs_difference)
 
 # Print out this value; it should be 0.1420605474512291. 
-print(obs_difference)
+print("obs_difference="+obs_difference)
+
+#STAGE4
