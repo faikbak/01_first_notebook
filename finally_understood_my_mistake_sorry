@@ -91,3 +91,4 @@ df=df[df['Reviews']==0].count()
 
 ##To summarize analytically, let's use the groupby() method on our df.
 df.groupby('Rating')('platform').describe()
+#there is a problem here but i couldn't find
