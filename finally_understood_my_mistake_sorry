@@ -19,10 +19,12 @@ Apple =pd.read_csv("AppleStore.csv")
 
 # Observe the first three entries
 Apple.head(3)
-
+#print("first 3 entries")
+#this isn't working i think,why? i couldn't see in the output
 #Subset our DataFrame object Google variables ['Category', 'Rating', 'Reviews', 'Price']
 Google=Google[['Category', 'Rating', 'Reviews', 'Price']]
 Google.head(3)
+#isn't printing anything print("first 3 entries")
 
 #select variables ['prime_genre', 'user_rating', 'rating_count_tot', 'price']
 apple=Apple[['prime_genre', 'user_rating', 'rating_count_tot', 'price']]
@@ -78,25 +80,21 @@ print(df.sample(12))
 print(df.shape)
 
 #eliminate all the NaN values
-print("before dropnan---------------------------------")
-print(df)
 df.dropna()
-print("without NAN----------------------------------")
-print(df)
+print("after dropnan---------------------------------\n",df)
+
 #df.dropna(axis=columns)
 #df.dropna(tresh=2)
-print(df.sample(5))
+#print(df.sample(5))
 #Check the new dimesions of our dataframe
-print(df.size)
+#print(df.size)
 
 # Do a count() on the result. 
-(df['Reviews']==0).count()
+print("review count",(df['Reviews']==0).count())
 
 # Eliminate the points that have 0 reviews
-df=df[df['Reviews']!=0]
-df.dropna()
-print("Eliminate the points that have 0 reviews and NAN",df)
-
+#df=df[df['Reviews']=0 & df['Reviews']=NaN]
+#print("after Eliminate the points that have 0 reviews and NAN df\n")
 
 #To summarize analytically, let's use the groupby() method on our df.
 df.groupby('platform','Rating').describe()
@@ -108,7 +106,7 @@ df.boxplot(by='platform', columns =['Rating'], grid=False, rot=45, fontsize=15)
 #PART3
 # Call the subsets 'apple' and 'google'
 apple=df[df['platform']=='apple']['Rating']
-#google=df[df['platform']=='google']['Rating']
+google=df[df['platform']=='google']['Rating']
 
 #get an indication of whether the apple data are normally distributed
 #the data are normally distributed, the lower the p-value in the result of this test, the more likely the data are to be non-normal.
@@ -163,4 +161,4 @@ for i in range(len(difference)):
         negativeExtremes.append(difference[i])
 
 print(len(negativeExtremes))
-print("for negative extreme")
+print("burasi negative extreme")
