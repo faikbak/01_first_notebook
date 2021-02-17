@@ -72,41 +72,48 @@ Apple.rename(columns=dict(zip(old_names, new_names)), inplace=True)
 df=Google.append(Apple, ignore_index = True) 
 
 #check 12 random points of your dataset
-df.sample(12)
+print(df.sample(12))
 
 #first the dimesions of df before droping
 print(df.shape)
 
 #eliminate all the NaN values
+print("before dropnan---------------------------------")
+print(df)
 df.dropna()
+print("without NAN----------------------------------")
+print(df)
 #df.dropna(axis=columns)
 #df.dropna(tresh=2)
-
+print(df.sample(5))
 #Check the new dimesions of our dataframe
 print(df.size)
 
 # Do a count() on the result. 
-df=df[df['Reviews']!=0].count()
+(df['Reviews']==0).count()
 
 # Eliminate the points that have 0 reviews
-df=[df['Reviews']!=0]
+df=df[df['Reviews']!=0]
+df.dropna()
+print("Eliminate the points that have 0 reviews and NAN",df)
+
 
 #To summarize analytically, let's use the groupby() method on our df.
-#df.groupby('platform','Rating').describe()
+df.groupby('platform','Rating').describe()
+#AttributeError: 'list' object has no attribute 'groupby'
 
 # Call the boxplot() method on our df.
-#df.boxplot(by='platform', columns =['Rating'], grid=False, rot=45, fontsize=15)
+df.boxplot(by='platform', columns =['Rating'], grid=False, rot=45, fontsize=15)
 
 #PART3
 # Call the subsets 'apple' and 'google'
-apple = df[df['platform'] == 'apple']['Rating']
-google = df[df['platform']== 'google']['Rating']
+apple=df[df['platform']=='apple']['Rating']
+#google=df[df['platform']=='google']['Rating']
 
 #get an indication of whether the apple data are normally distributed
 #the data are normally distributed, the lower the p-value in the result of this test, the more likely the data are to be non-normal.
 # Save the result in a variable
-apple_normal = stats.normaltest(Apple)
-print(apple_normal)
+apple_normal = stats.normaltest(apple)
 
 # Create a histogram of the apple reviews distribution
 histoApple=plt.hist(Apple)
@@ -155,5 +162,5 @@ for i in range(len(difference)):
     elif (difference[i] <= -obs_difference):
         negativeExtremes.append(difference[i])
 
-print(len(positiveExtremes))
 print(len(negativeExtremes))
+print("for negative extreme")
