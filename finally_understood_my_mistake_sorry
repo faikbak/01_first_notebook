@@ -54,7 +54,7 @@ nosymb=Google['Price'].str.replace('$','')
 print(nosymb)
 
 #Convert the 'Reviews' column to a numeric data type
-Google['Price']=pd.to_numeric(nosymb)
+Google['Reviews']=pd.to_numeric(nosymb)
 
 #check the data types of Google
 #print(Google.dtypes)
@@ -64,7 +64,7 @@ Apple['platform']='apple'
 Google['platform']='google'
 
 #store the column names of the Apple dataframe and replace
-old_names=Apple.columns
+old_names=list(Apple.columns.values.tolist())
 new_names=['A','B','C','D','E']
 Apple.rename(columns=dict(zip(old_names, new_names)), inplace=True)
 
@@ -146,7 +146,7 @@ obs_difference =abs(obs_difference)
 # Print out this value; it should be 0.1420605474512291. 
 print("obs_difference="+obs_difference)
 
-#STAGE4
+#PART4
 positiveExtremes = []
 negativeExtremes = []
 for i in range(len(difference)):
