@@ -1,0 +1,83 @@
+import pandas as pd
+import numpy as np
+import matplotlib as plt
+from scipy import stats
+#scipi is a library for statistical tests and visualization
+import random
+#enables us to generate random numbers
+
+#i didn't understand how to do this "Create a variable called google, and store in it the path of the csv file that contains your google dataset.
+Google=pd.read_csv("googleplaystore.csv")
+Google.head(3)
+
+Apple=pd.read_csv("AppleStore.csv")
+Apple.head(3)
+
+# Subset our DataFrame object Google by selecting just the variables ['Category', 'Rating', 'Reviews', 'Price']
+Google=Google[['Category', 'Rating', 'Reviews', 'Price']]
+Google.head(3)
+print("uniwue values of Price\n",Google['Price'][1])
+
+Apple=Apple[['prime_genre', 'user_rating', 'rating_count_tot', 'price']]
+Apple.head(3)
+
+#check out the data types within our Apple dataframe.
+Apple.dtypes
+
+#the data types of our Google dataframe
+Google.dtypes
+
+#unique() pandas method on the Price column
+Google['Price'].unique()
+
+#check which data points have the value 'Everyone' for the 'Price' column
+# Subset the Google dataframe on the price column. 
+# To be sure: you want to pick out just those rows whose value for the 'Price' column is just 'Everyone'. 
+Google[Google['Price']=='Everyone']
+
+# eliminate that row. 
+# Subset Google dataframe to pick out just those rows whose value for the 'Price' column is NOT 'Everyone'. 
+# Reassign that subset to the Google variable.
+# Google['Price']= Google[Google['Price'] !='Everyone']
+# Check again the unique values of Google
+Google=Google[Google['Price'] !='Everyone']
+Google['Price'].unique()
+
+nosymb = Google['Price'].str.replace('$','')
+
+Google.dtypes
+
+# Convert the 'Reviews' column to a numeric data type.
+Google['Reviews'] = pd.to_numeric(Google['Reviews'])
+
+Google.dtypes
+
+# Create a column called 'platform' in both the Apple and Google dataframes
+Apple['platform']="apple"
+Google['platform']="google"
+
+cols =Apple.columns.tolist()
+# Rearrange the list any way you want
+cols = cols[-3:] + cols[:-3]
+cols
+
+old_names=Apple.columns.tolist()
+new_names='ABCDE'
+newname0='ghf'
+newname2='kgj'
+#Use the rename() DataFrame method to change the columns names.
+# In the columns parameter of the rename() method, use this construction: dict(zip(old_names,new_names)).
+Apple.rename(columns=dict(zip(old_names,new_names)))
+#or this method
+#Apple.columns.values[[1,3]] = ['k','z']
+
+# Let's use the append() method to append Apple to Google. 
+# Make Apple the first parameter of append(), and make the second parameter just: ignore_index = True.
+Google = Google.append(Apple, ignore_index= True)
+
+# Using the sample() method with the number 12 passed to it, check 12 random points of your dataset.
+Google.sample(12)
+
+#experiencing problem here,i don't know why but keeps rising error AttributeError: 'DataFrame' object has no attribute 'dopna'
+Apple.dopna(how="any")
+Google.dopna(how="any")
