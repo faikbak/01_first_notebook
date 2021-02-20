@@ -78,6 +78,16 @@ Google = Google.append(Apple, ignore_index= True)
 # Using the sample() method with the number 12 passed to it, check 12 random points of your dataset.
 Google.sample(12)
 
-#experiencing problem here,i don't know why but keeps rising error AttributeError: 'DataFrame' object has no attribute 'dopna'
-Apple.dopna(how="any")
-Google.dopna(how="any")
+Apple.dropna(how="any")
+Google.dropna(how="any")
+
+# Eliminate the points that have 0 reviews.
+# An elegant way to do this is to assign df the result of picking out just those rows in df whose value for 'Reviews' is NOT 0.
+df=df[df["Reviews"]==0]
+
+# To summarize analytically, let's use the groupby() method on our df.
+# For its parameters, let's assign its 'by' parameter 'platform', and then make sure we're seeing 'Rating' too. 
+# Finally, call describe() on the result. We can do this in one line, but this isn't necessary. 
+df.groupby(by='Reviews').describe()
+
+#here jumpy prints all columns sidebyside. i couldn't fix it. any idea?
