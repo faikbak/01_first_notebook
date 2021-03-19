@@ -1503,8 +1503,8 @@ clean_properties.head()
       <th></th>
       <th>London_Borough</th>
       <th>ID</th>
-      <th>0</th>
-      <th>value</th>
+      <th>Month</th>
+      <th>Average_price</th>
     </tr>
   </thead>
   <tbody>
@@ -1513,35 +1513,111 @@ clean_properties.head()
       <td>City of London</td>
       <td>E09000001</td>
       <td>1995-01-01</td>
-      <td>91449</td>
+      <td>91448.984375</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Barking &amp; Dagenham</td>
       <td>E09000002</td>
       <td>1995-01-01</td>
-      <td>50460.2</td>
+      <td>50460.226562</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Barnet</td>
       <td>E09000003</td>
       <td>1995-01-01</td>
-      <td>93284.5</td>
+      <td>93284.515625</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Bexley</td>
       <td>E09000004</td>
       <td>1995-01-01</td>
-      <td>64958.1</td>
+      <td>64958.089844</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Brent</td>
       <td>E09000005</td>
       <td>1995-01-01</td>
-      <td>71306.6</td>
+      <td>71306.570312</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+#find most xpensive borough
+clean_properties.sort_values(["Average_price"],ascending = False,inplace = True, na_position ='last')
+clean_properties.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>London_Borough</th>
+      <th>ID</th>
+      <th>Month</th>
+      <th>Average_price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>13267</th>
+      <td>Kensington &amp; Chelsea</td>
+      <td>E09000020</td>
+      <td>2018-01-01</td>
+      <td>1463377.875</td>
+    </tr>
+    <tr>
+      <th>13603</th>
+      <td>Kensington &amp; Chelsea</td>
+      <td>E09000020</td>
+      <td>2018-08-01</td>
+      <td>1418032.250</td>
+    </tr>
+    <tr>
+      <th>12739</th>
+      <td>Kensington &amp; Chelsea</td>
+      <td>E09000020</td>
+      <td>2017-02-01</td>
+      <td>1412254.750</td>
+    </tr>
+    <tr>
+      <th>12835</th>
+      <td>Kensington &amp; Chelsea</td>
+      <td>E09000020</td>
+      <td>2017-04-01</td>
+      <td>1399838.625</td>
+    </tr>
+    <tr>
+      <th>12691</th>
+      <td>Kensington &amp; Chelsea</td>
+      <td>E09000020</td>
+      <td>2017-01-01</td>
+      <td>1394421.500</td>
     </tr>
   </tbody>
 </table>
@@ -1910,6 +1986,7 @@ These rows don't contain any valuable information. Delete them.
 # To this end, subset clean_properties on the condition: clean_properties['ID'].isna().
 # Notice that this line doesn't actually reassign a new value to clean_properties. 
 clean_properties[clean_properties['ID'].isna()]
+
 ```
 
 
@@ -2221,6 +2298,7 @@ You can now just put the negation operator *~* before the filter statement to ge
 
 ```python
 NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
+
 ```
 
 
@@ -2248,6 +2326,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <th>ID</th>
       <th>Month</th>
       <th>Average_price</th>
+      <th>Year</th>
     </tr>
   </thead>
   <tbody>
@@ -2257,6 +2336,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000001</td>
       <td>1995-01-01</td>
       <td>91448.984375</td>
+      <td>1995</td>
     </tr>
     <tr>
       <th>1</th>
@@ -2264,6 +2344,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000002</td>
       <td>1995-01-01</td>
       <td>50460.226562</td>
+      <td>1995</td>
     </tr>
     <tr>
       <th>2</th>
@@ -2271,6 +2352,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000003</td>
       <td>1995-01-01</td>
       <td>93284.515625</td>
+      <td>1995</td>
     </tr>
     <tr>
       <th>3</th>
@@ -2278,6 +2360,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000004</td>
       <td>1995-01-01</td>
       <td>64958.089844</td>
+      <td>1995</td>
     </tr>
     <tr>
       <th>4</th>
@@ -2285,9 +2368,11 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000005</td>
       <td>1995-01-01</td>
       <td>71306.570312</td>
+      <td>1995</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -2299,6 +2384,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000029</td>
       <td>2020-12-01</td>
       <td>398639.312500</td>
+      <td>2020</td>
     </tr>
     <tr>
       <th>14957</th>
@@ -2306,6 +2392,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000030</td>
       <td>2020-12-01</td>
       <td>471445.031250</td>
+      <td>2020</td>
     </tr>
     <tr>
       <th>14958</th>
@@ -2313,6 +2400,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000031</td>
       <td>2020-12-01</td>
       <td>485676.343750</td>
+      <td>2020</td>
     </tr>
     <tr>
       <th>14959</th>
@@ -2320,6 +2408,7 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000032</td>
       <td>2020-12-01</td>
       <td>618530.687500</td>
+      <td>2020</td>
     </tr>
     <tr>
       <th>14960</th>
@@ -2327,10 +2416,11 @@ NaNFreeDF2[~NaNFreeDF2.London_Borough.isin(nonBoroughs)]
       <td>E09000033</td>
       <td>2020-12-01</td>
       <td>930070.312500</td>
+      <td>2020</td>
     </tr>
   </tbody>
 </table>
-<p>10296 rows × 4 columns</p>
+<p>10296 rows × 5 columns</p>
 </div>
 
 
@@ -2547,7 +2637,7 @@ ax.set_ylabel('Price')
 
 
     
-![png](output_79_1.png)
+![png](output_80_1.png)
     
 
 
@@ -3585,104 +3675,29 @@ top15.head(20)
 # Let's plot the boroughs that have seen the greatest changes in price.
 # Make a variable called ax. Assign it the result of filtering top15 on 'Borough' and '2018', then calling plot(), with
 # the parameter kind = 'bar'. 
-ax = top15.loc['London_Borough',2018].plot(kind="bar")
+top15[['London_Borough']['Year']==2018].plot(kind="bar") 
 ax.set_xticklabels(['London_Borough'])
-ax
 ```
+
+    <>:4: SyntaxWarning: list indices must be integers or slices, not str; perhaps you missed a comma?
+    <>:4: SyntaxWarning: list indices must be integers or slices, not str; perhaps you missed a comma?
+    <ipython-input-343-daa1d57cb300>:4: SyntaxWarning: list indices must be integers or slices, not str; perhaps you missed a comma?
+      top15[['London_Borough']['Year']==2018].plot(kind="bar")
+    
 
 
     ---------------------------------------------------------------------------
 
-    KeyError                                  Traceback (most recent call last)
+    TypeError                                 Traceback (most recent call last)
 
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexes\base.py in get_loc(self, key, method, tolerance)
-       2894             try:
-    -> 2895                 return self._engine.get_loc(casted_key)
-       2896             except KeyError as err:
-    
-
-    pandas\_libs\index.pyx in pandas._libs.index.IndexEngine.get_loc()
-    
-
-    pandas\_libs\index.pyx in pandas._libs.index.IndexEngine.get_loc()
-    
-
-    pandas\_libs\index_class_helper.pxi in pandas._libs.index.Int64Engine._check_type()
-    
-
-    KeyError: 'London_Borough'
-
-    
-    The above exception was the direct cause of the following exception:
-    
-
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-328-14104afd141f> in <module>
+    <ipython-input-343-daa1d57cb300> in <module>
           2 # Make a variable called ax. Assign it the result of filtering top15 on 'Borough' and '2018', then calling plot(), with
           3 # the parameter kind = 'bar'.
-    ----> 4 ax = top15.loc['London_Borough',2018].plot(kind="bar")
+    ----> 4 top15[['London_Borough']['Year']==2018].plot(kind="bar")
           5 ax.set_xticklabels(['London_Borough'])
-          6 ax
     
 
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexing.py in __getitem__(self, key)
-        871                     # AttributeError for IntervalTree get_value
-        872                     pass
-    --> 873             return self._getitem_tuple(key)
-        874         else:
-        875             # we by definition only have the 0th axis
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexing.py in _getitem_tuple(self, tup)
-       1042     def _getitem_tuple(self, tup: Tuple):
-       1043         try:
-    -> 1044             return self._getitem_lowerdim(tup)
-       1045         except IndexingError:
-       1046             pass
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexing.py in _getitem_lowerdim(self, tup)
-        784                 # We don't need to check for tuples here because those are
-        785                 #  caught by the _is_nested_tuple_indexer check above.
-    --> 786                 section = self._getitem_axis(key, axis=i)
-        787 
-        788                 # We should never have a scalar section here, because
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexing.py in _getitem_axis(self, key, axis)
-       1108         # fall thru to straight lookup
-       1109         self._validate_key(key, axis)
-    -> 1110         return self._get_label(key, axis=axis)
-       1111 
-       1112     def _get_slice_axis(self, slice_obj: slice, axis: int):
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexing.py in _get_label(self, label, axis)
-       1057     def _get_label(self, label, axis: int):
-       1058         # GH#5667 this will fail if the label is not present in the axis.
-    -> 1059         return self.obj.xs(label, axis=axis)
-       1060 
-       1061     def _handle_lowerdim_multi_index_axis0(self, tup: Tuple):
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\generic.py in xs(self, key, axis, level, drop_level)
-       3489             loc, new_index = self.index.get_loc_level(key, drop_level=drop_level)
-       3490         else:
-    -> 3491             loc = self.index.get_loc(key)
-       3492 
-       3493             if isinstance(loc, np.ndarray):
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexes\base.py in get_loc(self, key, method, tolerance)
-       2895                 return self._engine.get_loc(casted_key)
-       2896             except KeyError as err:
-    -> 2897                 raise KeyError(key) from err
-       2898 
-       2899         if tolerance is not None:
-    
-
-    KeyError: 'London_Borough'
+    TypeError: list indices must be integers or slices, not str
 
 
 ### 4. Conclusion
