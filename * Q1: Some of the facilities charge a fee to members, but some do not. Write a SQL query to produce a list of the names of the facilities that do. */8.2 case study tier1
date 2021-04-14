@@ -1,0 +1,61 @@
+/* Q1: Some of the facilities charge a fee to members, but some do not.
+Write a SQL query to produce a list of the names of the facilities that do. */
+
+SELECT name
+FROM Facilities
+WHERE membercost > 0
+
+/* Q2: How many facilities do not charge a fee to members? */
+SELECT *
+FROM Facilities
+WHERE Facilities.membercost>0
+ORDER BY Facilities.membercost  DESC
+
+/* Q3: How can you produce a list of facilities that charge a fee to members,
+where the fee is less than 20% of the facility's monthly maintenance cost?
+Return the facid, facility name, member cost, and monthly maintenance of the
+facilities in question. */
+
+SELECT *
+FROM Facilities
+WHERE membercost IS NOT NULL
+AND membercost / monthlymaintenance < 0.2
+LIMIT 0 , 30
+
+/* Q4: Write an SQL query to retrieve the details of facilities with ID 1 and 5.
+Try writing the query without using the OR operator. */
+
+FROM Facilities
+WHERE facid
+IN ( 1, 5 )
+LIMIT 0 , 30
+
+/* Q5: How can you produce a list of facilities, with each labelled as
+'cheap' or 'expensive', depending on if their monthly maintenance cost is
+more than $100? Return the name and monthly maintenance of the facilities
+in question. */
+
+SELECT name, monthlymaintenance, 
+CASE WHEN monthlymaintenance > 100 THEN 'expensive'
+     ELSE 'cheap' END AS label
+FROM Facilities
+
+/* Q6: You'd like to get the first and last name of the last member(s) who signed up. Try not to use the LIMIT clause for your solution. */ 
+SELECT firstname, surname, joindate
+FROM Members
+WHERE joindate = (
+SELECT MAX( joindate )
+FROM Members )
+
+/*SECOND ALTERNETAVI*/
+SELECT firstname, surname, joindate
+FROM Members
+ORDER BY joindate DESC
+
+/* Q7: Produce a list of all members who have used a tennis court.
+Include in your output the name of the court, and the name of the member
+formatted as a single column. Ensure no duplicate data, and order by
+the member name. */
+SELECT REPLACE(CONCAT_WS( ' ', firstName, surname ) , '  ', ' ' ) AS fullname
+FROM Members
+LIMIT 0 , 30
