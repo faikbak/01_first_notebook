@@ -47,7 +47,7 @@ WHERE joindate = (
 SELECT MAX( joindate )
 FROM Members )
 
-/*SECOND ALTERNETAVI*/
+/*SECOND ALTERNETAVE*/
 SELECT firstname, surname, joindate
 FROM Members
 ORDER BY joindate DESC
@@ -55,7 +55,19 @@ ORDER BY joindate DESC
 /* Q7: Produce a list of all members who have used a tennis court.
 Include in your output the name of the court, and the name of the member
 formatted as a single column. Ensure no duplicate data, and order by
-the member name. */
-SELECT REPLACE(CONCAT_WS( ' ', firstName, surname ) , '  ', ' ' ) AS fullname
-FROM Members
-LIMIT 0 , 30
+the member name. test: 
+SELECT 
+REPLACE(CONCAT_WS(' ',firstname,surname),'  ',' ') 
+AS fullname FROM Members,Facilities.name AS court
+*/
+
+SELECT sub.court, CONCAT( sub.firstname,  ' ', sub.surname ) AS name
+FROM (
+SELECT Facilities.name AS court, Members.firstname AS firstname, Members.surname AS surname
+FROM Bookings
+INNER JOIN Facilities ON Bookings.facid = Facilities.facid
+AND Facilities.name LIKE 'Tennis Court%'
+INNER JOIN Members ON Bookings.memid = Members.memid
+) sub
+GROUP BY sub.court, sub.firstname, sub.surname
+ORDER BY name
