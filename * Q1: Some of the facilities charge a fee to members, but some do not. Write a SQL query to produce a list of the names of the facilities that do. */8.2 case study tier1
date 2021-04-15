@@ -61,13 +61,38 @@ REPLACE(CONCAT_WS(' ',firstname,surname),'  ',' ')
 AS fullname FROM Members,Facilities.name AS court
 */
 
-SELECT sub.court, CONCAT( sub.firstname,  ' ', sub.surname ) AS name
+SELECT sub.tennis_court, CONCAT( sub.firstname,  ' ', sub.surname ) AS name
 FROM (
-SELECT Facilities.name AS court, Members.firstname AS firstname, Members.surname AS surname
+SELECT Facilities.name AS tennis_court, Members.firstname AS firstname, Members.surname AS surname
 FROM Bookings
 INNER JOIN Facilities ON Bookings.facid = Facilities.facid
 AND Facilities.name LIKE 'Tennis Court%'
 INNER JOIN Members ON Bookings.memid = Members.memid
 ) sub
-GROUP BY sub.court, sub.firstname, sub.surname
+GROUP BY sub.tennis_court, sub.firstname, sub.surname
 ORDER BY name
+
+/* Q8: Produce a list of bookings on the day of 2012-09-14 which
+will cost the member (or guest) more than $30. Remember that guests have
+different costs to members (the listed costs are per half-hour 'slot'), and
+the guest user's ID is always 0. Include in your output the name of the
+facility, the name of the member formatted as a single column, and the cost.
+Order by descending cost, and do not use any subqueries. */
+/*name of member,concate first and surnames*/
+SELECT Facilities.name AS facility, CONCAT( Members.firstname,  ' ', Members.surname ) AS name, 
+/*non member guest ID bookings*/
+CASE WHEN Bookings.memid =0
+/*guests have different cost, find them slots*price*/
+THEN Facilities.guestcost * Bookings.slots
+ELSE Facilities.membercost * Bookings.slots
+END AS cost
+FROM Bookings
+/*inner join on IDs, starting date,non members */
+INNER JOIN Facilities ON Bookings.facid = Facilities.facid
+AND Bookings.starttime LIKE  '2012-09-14%'
+AND (((Bookings.memid =0) AND (Facilities.guestcost * Bookings.slots >30))
+OR ((Bookings.memid !=0) AND (Facilities.membercost * Bookings.slots >30)))
+INNER JOIN Members ON Bookings.memid = Members.memid
+/*ordered results*/
+ORDER BY cost DESC
+
