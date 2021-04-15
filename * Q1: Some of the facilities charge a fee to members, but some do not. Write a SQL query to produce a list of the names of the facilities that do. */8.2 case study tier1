@@ -78,6 +78,7 @@ different costs to members (the listed costs are per half-hour 'slot'), and
 the guest user's ID is always 0. Include in your output the name of the
 facility, the name of the member formatted as a single column, and the cost.
 Order by descending cost, and do not use any subqueries. */
+
 /*name of member,concate first and surnames*/
 SELECT Facilities.name AS facility, CONCAT( Members.firstname,  ' ', Members.surname ) AS name, 
 /*non member guest ID bookings*/
@@ -91,8 +92,32 @@ FROM Bookings
 INNER JOIN Facilities ON Bookings.facid = Facilities.facid
 AND Bookings.starttime LIKE  '2012-09-14%'
 AND (((Bookings.memid =0) AND (Facilities.guestcost * Bookings.slots >30))
+/*member cost*/
 OR ((Bookings.memid !=0) AND (Facilities.membercost * Bookings.slots >30)))
 INNER JOIN Members ON Bookings.memid = Members.memid
 /*ordered results*/
 ORDER BY cost DESC
+
+/* Q9: This time, produce the same result as in Q8, but using a subquery. */
+
+/* create subq*/
+SELECT * 
+FROM (
+/*name of member,concate first and surnames*/
+SELECT Facilities.name AS facility, CONCAT( Members.firstname,  ' ', Members.surname ) AS name,
+/* change pricing for non-members */
+CASE WHEN Bookings.memid =0
+THEN Facilities.guestcost * Bookings.slots
+ELSE Facilities.membercost * Bookings.slots
+END AS cost
+FROM Bookings
+/* join on IDs where start time 2012-09-14 and cost is>30$ */
+INNER JOIN Facilities ON Bookings.facid = Facilities.facid
+AND Bookings.starttime LIKE  '2012-09-14%'
+INNER JOIN Members ON Bookings.memid = Members.memid
+)sub
+WHERE sub.cost >30
+/*order result*/
+ORDER BY sub.cost DESC
+
 
