@@ -605,7 +605,8 @@ healthcare.median()
 
 ```python
 healthcare.mode()
-#The mode of a data values is the value that appears most often.It is the value at which the data is most likely to be sampled
+#The mode of a data values is the value that appears most often.
+#It is the value at which the data is most likely to be sampled
 ```
 
 
@@ -1101,5 +1102,21 @@ healthcare['smoking_status'].value_counts()
     formerly smoked     885
     smokes              789
     Name: smoking_status, dtype: int64
+
+
+
+for column mode we use loc method,so that we can mode a sepsific column
+
+
+```python
+healthcare.loc[:,'smoking_status'].mode()
+```
+
+
+
+
+    0    never smoked
+    Name: smoking_status, dtype: category
+    Categories (4, object): ['Unknown', 'formerly smoked', 'never smoked', 'smokes']
 
 
