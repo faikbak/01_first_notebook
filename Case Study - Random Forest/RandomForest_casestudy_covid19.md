@@ -7,16 +7,8 @@ The Random Forest algorithm introduces extra randomness when growing trees; inst
 
 ```python
 #install graphiz
-conda install python-graphviz
+#conda install python-graphviz
 ```
-
-
-      File "<ipython-input-508-571df625070c>", line 2
-        conda install python-graphviz
-              ^
-    SyntaxError: invalid syntax
-    
-
 
 
 ```python
@@ -24,6 +16,13 @@ import graphviz
 import subprocess
 subprocess.call(['powershell','-command','dir'])
 ```
+
+
+
+
+    0
+
+
 
 
 ```python
@@ -56,6 +55,15 @@ from IPython.display import Image
 Image(filename = 'tree.png')
 ```
 
+
+
+
+    
+![png](output_3_0.png)
+    
+
+
+
 Notice how each split seperates the data into buckets of similar observations. This is a single tree and a relatively simple classification dataset, but the same method is used in a more complex dataset with greater depth to the trees.
 
 ## Coronavirus
@@ -71,6 +79,13 @@ First, please load the needed packages and modules into Python. Next, load the d
 import plotly
 plotly.__version__
 ```
+
+
+
+
+    '4.14.3'
+
+
 
 
 ```python
@@ -430,7 +445,15 @@ df.n_age.dtypes
 ```python
 #check by controlling dtytypes
 df['age']= np.nan_to_num(df['age'])
+df['age'].dtypes
 ```
+
+
+
+
+    dtype('O')
+
+
 
 ### Handle Missing Values
 
@@ -504,7 +527,7 @@ df.info()
 
 
 ```python
-df[ 'disease'].fillna(0)
+df[ 'disease']=df[ 'disease'].fillna(0)
 df['disease'] = df['disease'].replace(True, 1)
 ```
 
@@ -513,132 +536,8 @@ df['disease'] = df['disease'].replace(True, 1)
 
 ```python
 mean_cols=[ 'global_num','birth_year','infection_order','infected_by', 'contact_number']
-df[mean_cols].fillna(value=df[mean_cols].mean(), inplace=False)
+df[mean_cols]=df[mean_cols].fillna(df[mean_cols].mean())
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>global_num</th>
-      <th>birth_year</th>
-      <th>infection_order</th>
-      <th>infected_by</th>
-      <th>contact_number</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2.000000</td>
-      <td>1964</td>
-      <td>1.000000</td>
-      <td>2.600789e+09</td>
-      <td>75.000000</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5.000000</td>
-      <td>1987</td>
-      <td>1.000000</td>
-      <td>2.600789e+09</td>
-      <td>31.000000</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>6.000000</td>
-      <td>1964</td>
-      <td>2.000000</td>
-      <td>2.002000e+09</td>
-      <td>17.000000</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>7.000000</td>
-      <td>1991</td>
-      <td>1.000000</td>
-      <td>2.600789e+09</td>
-      <td>9.000000</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>9.000000</td>
-      <td>1992</td>
-      <td>2.000000</td>
-      <td>1.000000e+09</td>
-      <td>2.000000</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2213</th>
-      <td>4664.816591</td>
-      <td>1990</td>
-      <td>2.285714</td>
-      <td>2.600789e+09</td>
-      <td>24.128954</td>
-    </tr>
-    <tr>
-      <th>2214</th>
-      <td>139.000000</td>
-      <td>1998</td>
-      <td>2.285714</td>
-      <td>2.600789e+09</td>
-      <td>87.000000</td>
-    </tr>
-    <tr>
-      <th>2215</th>
-      <td>222.000000</td>
-      <td>1998</td>
-      <td>2.285714</td>
-      <td>2.600789e+09</td>
-      <td>84.000000</td>
-    </tr>
-    <tr>
-      <th>2216</th>
-      <td>4345.000000</td>
-      <td>1972</td>
-      <td>2.285714</td>
-      <td>2.600789e+09</td>
-      <td>21.000000</td>
-    </tr>
-    <tr>
-      <th>2217</th>
-      <td>5534.000000</td>
-      <td>1974</td>
-      <td>2.285714</td>
-      <td>2.600789e+09</td>
-      <td>74.000000</td>
-    </tr>
-  </tbody>
-</table>
-<p>2218 rows × 5 columns</p>
-</div>
-
-
 
  **<font color='teal'> Fill the rest of the missing values with any method.</font>**
 
@@ -668,7 +567,6 @@ df[df.columns[~df.columns.isin(mean_cols)]].sample()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
       <th>patient_id</th>
       <th>sex</th>
       <th>age</th>
@@ -677,24 +575,31 @@ df[df.columns[~df.columns.isin(mean_cols)]].sample()
       <th>city</th>
       <th>disease</th>
       <th>infection_case</th>
+      <th>symptom_onset_date</th>
+      <th>confirmed_date</th>
+      <th>released_date</th>
+      <th>deceased_date</th>
       <th>state</th>
       <th>n_age</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>1614</th>
-      <td>1614</td>
-      <td>6002000005</td>
-      <td>female</td>
-      <td>40</td>
+      <th>1229</th>
+      <td>6001000155</td>
+      <td>male</td>
+      <td>80</td>
       <td>Korea</td>
       <td>Gyeongsangbuk-do</td>
-      <td>Gyeongju-si</td>
+      <td>Gyeongsan-si</td>
+      <td>0.0</td>
       <td>NaN</td>
-      <td>contact with patient</td>
+      <td>NaN</td>
+      <td>2020-03-01</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>isolated</td>
-      <td>46</td>
+      <td>83</td>
     </tr>
   </tbody>
 </table>
@@ -914,22 +819,25 @@ df.isnull().sum()
 
 
 
-    index                 0
-    patient_id            0
-    global_num          904
-    sex                 145
-    birth_year            0
-    age                 261
-    country               0
-    province              0
-    city                 65
-    disease            2199
-    infection_case     1055
-    infection_order    2176
-    infected_by        1749
-    contact_number     1807
-    state                88
-    n_age                 0
+    patient_id               0
+    global_num               0
+    sex                    145
+    birth_year               0
+    age                    261
+    country                  0
+    province                 0
+    city                    65
+    disease                  0
+    infection_case        1055
+    infection_order          0
+    infected_by              0
+    contact_number           0
+    symptom_onset_date    2025
+    confirmed_date         141
+    released_date         1995
+    deceased_date         2186
+    state                   88
+    n_age                    0
     dtype: int64
 
 
@@ -960,7 +868,6 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
       <th>patient_id</th>
       <th>global_num</th>
       <th>sex</th>
@@ -974,6 +881,10 @@ df.head()
       <th>infection_order</th>
       <th>infected_by</th>
       <th>contact_number</th>
+      <th>symptom_onset_date</th>
+      <th>confirmed_date</th>
+      <th>released_date</th>
+      <th>deceased_date</th>
       <th>state</th>
       <th>n_age</th>
     </tr>
@@ -981,7 +892,6 @@ df.head()
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
       <td>1000000001</td>
       <td>2.0</td>
       <td>male</td>
@@ -990,17 +900,20 @@ df.head()
       <td>Korea</td>
       <td>Seoul</td>
       <td>Gangseo-gu</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>overseas inflow</td>
       <td>1.0</td>
-      <td>NaN</td>
+      <td>2.600789e+09</td>
       <td>75.0</td>
+      <td>2020-01-22</td>
+      <td>2020-01-23</td>
+      <td>2020-02-05</td>
+      <td>NaN</td>
       <td>released</td>
       <td>57</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1</td>
       <td>1000000002</td>
       <td>5.0</td>
       <td>male</td>
@@ -1009,17 +922,20 @@ df.head()
       <td>Korea</td>
       <td>Seoul</td>
       <td>Jungnang-gu</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>overseas inflow</td>
       <td>1.0</td>
-      <td>NaN</td>
+      <td>2.600789e+09</td>
       <td>31.0</td>
+      <td>NaN</td>
+      <td>2020-01-30</td>
+      <td>2020-03-02</td>
+      <td>NaN</td>
       <td>released</td>
       <td>34</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2</td>
       <td>1000000003</td>
       <td>6.0</td>
       <td>male</td>
@@ -1028,17 +944,20 @@ df.head()
       <td>Korea</td>
       <td>Seoul</td>
       <td>Jongno-gu</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>contact with patient</td>
       <td>2.0</td>
       <td>2.002000e+09</td>
       <td>17.0</td>
+      <td>NaN</td>
+      <td>2020-01-30</td>
+      <td>2020-02-19</td>
+      <td>NaN</td>
       <td>released</td>
       <td>57</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3</td>
       <td>1000000004</td>
       <td>7.0</td>
       <td>male</td>
@@ -1047,17 +966,20 @@ df.head()
       <td>Korea</td>
       <td>Seoul</td>
       <td>Mapo-gu</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>overseas inflow</td>
       <td>1.0</td>
-      <td>NaN</td>
+      <td>2.600789e+09</td>
       <td>9.0</td>
+      <td>2020-01-26</td>
+      <td>2020-01-30</td>
+      <td>2020-02-15</td>
+      <td>NaN</td>
       <td>released</td>
       <td>30</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4</td>
       <td>1000000005</td>
       <td>9.0</td>
       <td>female</td>
@@ -1066,11 +988,15 @@ df.head()
       <td>Korea</td>
       <td>Seoul</td>
       <td>Seongbuk-gu</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>contact with patient</td>
       <td>2.0</td>
       <td>1.000000e+09</td>
       <td>2.0</td>
+      <td>NaN</td>
+      <td>2020-01-31</td>
+      <td>2020-02-24</td>
+      <td>NaN</td>
       <td>released</td>
       <td>29</td>
     </tr>
@@ -1088,50 +1014,6 @@ Remove date columns from the data.
 df = df.drop(['symptom_onset_date','confirmed_date','released_date','deceased_date'],axis =1)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-604-c24361eee42d> in <module>
-    ----> 1 df = df.drop(['symptom_onset_date','confirmed_date','released_date','deceased_date'],axis =1)
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\frame.py in drop(self, labels, axis, index, columns, level, inplace, errors)
-       4161                 weight  1.0     0.8
-       4162         """
-    -> 4163         return super().drop(
-       4164             labels=labels,
-       4165             axis=axis,
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\generic.py in drop(self, labels, axis, index, columns, level, inplace, errors)
-       3885         for axis, labels in axes.items():
-       3886             if labels is not None:
-    -> 3887                 obj = obj._drop_axis(labels, axis, level=level, errors=errors)
-       3888 
-       3889         if inplace:
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\generic.py in _drop_axis(self, labels, axis, level, errors)
-       3919                 new_axis = axis.drop(labels, level=level, errors=errors)
-       3920             else:
-    -> 3921                 new_axis = axis.drop(labels, errors=errors)
-       3922             result = self.reindex(**{axis_name: new_axis})
-       3923 
-    
-
-    C:\Users\toshiba\anaconda3\lib\site-packages\pandas\core\indexes\base.py in drop(self, labels, errors)
-       5280         if mask.any():
-       5281             if errors != "ignore":
-    -> 5282                 raise KeyError(f"{labels[mask]} not found in axis")
-       5283             indexer = indexer[~mask]
-       5284         return self.delete(indexer)
-    
-
-    KeyError: "['symptom_onset_date' 'confirmed_date' 'released_date' 'deceased_date'] not found in axis"
-
-
 Review the count of unique values by column.
 
 
@@ -1139,20 +1021,19 @@ Review the count of unique values by column.
 print(df.nunique())
 ```
 
-    index              2218
     patient_id         2218
-    global_num         1303
+    global_num         1304
     sex                   2
     birth_year           97
     age                  11
     country               4
     province             17
     city                134
-    disease               1
+    disease               2
     infection_case       16
-    infection_order       6
-    infected_by         206
-    contact_number       72
+    infection_order       7
+    infected_by         207
+    contact_number       73
     state                 3
     n_age                97
     dtype: int64
@@ -1165,20 +1046,19 @@ Review the percent of unique values by column.
 print(df.nunique()/df.shape[0]*100)
 ```
 
-    index              100.000000
     patient_id         100.000000
-    global_num          58.746619
+    global_num          58.791704
     sex                  0.090171
     birth_year           4.373309
     age                  0.495942
     country              0.180343
     province             0.766456
     city                 6.041479
-    disease              0.045086
+    disease              0.090171
     infection_case       0.721371
-    infection_order      0.270514
-    infected_by          9.287647
-    contact_number       3.246168
+    infection_order      0.315600
+    infected_by          9.332732
+    contact_number       3.291253
     state                0.135257
     n_age                4.373309
     dtype: float64
@@ -1224,17 +1104,6 @@ df.describe().T
   </thead>
   <tbody>
     <tr>
-      <th>index</th>
-      <td>2218.0</td>
-      <td>1.108500e+03</td>
-      <td>6.404258e+02</td>
-      <td>0.000000e+00</td>
-      <td>5.542500e+02</td>
-      <td>1.108500e+03</td>
-      <td>1.662750e+03</td>
-      <td>2.217000e+03</td>
-    </tr>
-    <tr>
       <th>patient_id</th>
       <td>2218.0</td>
       <td>4.014678e+09</td>
@@ -1247,13 +1116,13 @@ df.describe().T
     </tr>
     <tr>
       <th>global_num</th>
-      <td>1314.0</td>
+      <td>2218.0</td>
       <td>4.664817e+03</td>
-      <td>2.874044e+03</td>
+      <td>2.211785e+03</td>
       <td>1.000000e+00</td>
-      <td>1.908500e+03</td>
-      <td>5.210500e+03</td>
-      <td>7.481500e+03</td>
+      <td>4.205250e+03</td>
+      <td>4.664817e+03</td>
+      <td>5.900250e+03</td>
       <td>8.717000e+03</td>
     </tr>
     <tr>
@@ -1269,46 +1138,46 @@ df.describe().T
     </tr>
     <tr>
       <th>disease</th>
-      <td>19.0</td>
-      <td>1.000000e+00</td>
+      <td>2218.0</td>
+      <td>8.566276e-03</td>
+      <td>9.217769e-02</td>
       <td>0.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
       <td>1.000000e+00</td>
     </tr>
     <tr>
       <th>infection_order</th>
-      <td>42.0</td>
+      <td>2218.0</td>
       <td>2.285714e+00</td>
-      <td>1.254955e+00</td>
+      <td>1.706622e-01</td>
       <td>1.000000e+00</td>
-      <td>1.250000e+00</td>
-      <td>2.000000e+00</td>
-      <td>3.000000e+00</td>
+      <td>2.285714e+00</td>
+      <td>2.285714e+00</td>
+      <td>2.285714e+00</td>
       <td>6.000000e+00</td>
     </tr>
     <tr>
       <th>infected_by</th>
-      <td>469.0</td>
+      <td>2218.0</td>
       <td>2.600789e+09</td>
-      <td>1.570638e+09</td>
+      <td>7.216328e+08</td>
       <td>1.000000e+09</td>
-      <td>1.200000e+09</td>
-      <td>2.000000e+09</td>
-      <td>4.100000e+09</td>
+      <td>2.600789e+09</td>
+      <td>2.600789e+09</td>
+      <td>2.600789e+09</td>
       <td>6.113000e+09</td>
     </tr>
     <tr>
       <th>contact_number</th>
-      <td>411.0</td>
+      <td>2218.0</td>
       <td>2.412895e+01</td>
-      <td>9.108779e+01</td>
+      <td>3.917141e+01</td>
       <td>0.000000e+00</td>
-      <td>2.000000e+00</td>
-      <td>5.000000e+00</td>
-      <td>1.600000e+01</td>
+      <td>2.412895e+01</td>
+      <td>2.412895e+01</td>
+      <td>2.412895e+01</td>
       <td>1.160000e+03</td>
     </tr>
     <tr>
@@ -1357,7 +1226,6 @@ duplicateRowsDF
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
       <th>patient_id</th>
       <th>global_num</th>
       <th>sex</th>
@@ -1490,7 +1358,6 @@ df.corr()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
       <th>patient_id</th>
       <th>global_num</th>
       <th>birth_year</th>
@@ -1503,111 +1370,91 @@ df.corr()
   </thead>
   <tbody>
     <tr>
-      <th>index</th>
-      <td>1.000000</td>
-      <td>0.916691</td>
-      <td>-0.050863</td>
-      <td>-0.388629</td>
-      <td>NaN</td>
-      <td>-0.193062</td>
-      <td>0.827157</td>
-      <td>-0.118342</td>
-      <td>0.388629</td>
-    </tr>
-    <tr>
       <th>patient_id</th>
-      <td>0.916691</td>
       <td>1.000000</td>
-      <td>-0.144366</td>
+      <td>-0.115774</td>
       <td>-0.263385</td>
-      <td>NaN</td>
-      <td>-0.203748</td>
-      <td>0.911091</td>
-      <td>-0.128676</td>
+      <td>-3.822030e-02</td>
+      <td>-2.728051e-02</td>
+      <td>2.963213e-01</td>
+      <td>-4.609026e-02</td>
       <td>0.263385</td>
     </tr>
     <tr>
       <th>global_num</th>
-      <td>-0.050863</td>
-      <td>-0.144366</td>
+      <td>-0.115774</td>
       <td>1.000000</td>
-      <td>0.234770</td>
-      <td>NaN</td>
-      <td>0.685239</td>
-      <td>-0.050353</td>
-      <td>-0.122026</td>
-      <td>-0.234770</td>
+      <td>0.121485</td>
+      <td>-1.088897e-01</td>
+      <td>-1.496382e-02</td>
+      <td>-5.265407e-02</td>
+      <td>-4.289483e-02</td>
+      <td>-0.121485</td>
     </tr>
     <tr>
       <th>birth_year</th>
-      <td>-0.388629</td>
       <td>-0.263385</td>
-      <td>0.234770</td>
+      <td>0.121485</td>
       <td>1.000000</td>
-      <td>NaN</td>
-      <td>-0.510739</td>
-      <td>-0.095998</td>
-      <td>0.003278</td>
+      <td>3.276547e-02</td>
+      <td>-1.494704e-03</td>
+      <td>-3.380101e-02</td>
+      <td>1.442535e-03</td>
       <td>-1.000000</td>
     </tr>
     <tr>
       <th>disease</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>-0.038220</td>
+      <td>-0.108890</td>
+      <td>0.032765</td>
+      <td>1.000000e+00</td>
+      <td>-1.054174e-16</td>
+      <td>8.507053e-17</td>
+      <td>4.553238e-17</td>
+      <td>-0.032765</td>
     </tr>
     <tr>
       <th>infection_order</th>
-      <td>-0.193062</td>
-      <td>-0.203748</td>
-      <td>0.685239</td>
-      <td>-0.510739</td>
-      <td>NaN</td>
-      <td>1.000000</td>
-      <td>-0.547866</td>
-      <td>0.008365</td>
-      <td>0.510739</td>
+      <td>-0.027281</td>
+      <td>-0.014964</td>
+      <td>-0.001495</td>
+      <td>-1.054174e-16</td>
+      <td>1.000000e+00</td>
+      <td>-1.374471e-01</td>
+      <td>-1.601407e-02</td>
+      <td>0.001495</td>
     </tr>
     <tr>
       <th>infected_by</th>
-      <td>0.827157</td>
-      <td>0.911091</td>
-      <td>-0.050353</td>
-      <td>-0.095998</td>
-      <td>NaN</td>
-      <td>-0.547866</td>
-      <td>1.000000</td>
-      <td>-0.136611</td>
-      <td>0.095998</td>
+      <td>0.296321</td>
+      <td>-0.052654</td>
+      <td>-0.033801</td>
+      <td>8.507053e-17</td>
+      <td>-1.374471e-01</td>
+      <td>1.000000e+00</td>
+      <td>-2.179920e-02</td>
+      <td>0.033801</td>
     </tr>
     <tr>
       <th>contact_number</th>
-      <td>-0.118342</td>
-      <td>-0.128676</td>
-      <td>-0.122026</td>
-      <td>0.003278</td>
-      <td>NaN</td>
-      <td>0.008365</td>
-      <td>-0.136611</td>
-      <td>1.000000</td>
-      <td>-0.003278</td>
+      <td>-0.046090</td>
+      <td>-0.042895</td>
+      <td>0.001443</td>
+      <td>4.553238e-17</td>
+      <td>-1.601407e-02</td>
+      <td>-2.179920e-02</td>
+      <td>1.000000e+00</td>
+      <td>-0.001443</td>
     </tr>
     <tr>
       <th>n_age</th>
-      <td>0.388629</td>
       <td>0.263385</td>
-      <td>-0.234770</td>
+      <td>-0.121485</td>
       <td>-1.000000</td>
-      <td>NaN</td>
-      <td>0.510739</td>
-      <td>0.095998</td>
-      <td>-0.003278</td>
+      <td>-3.276547e-02</td>
+      <td>1.494704e-03</td>
+      <td>3.380101e-02</td>
+      <td>-1.442535e-03</td>
       <td>1.000000</td>
     </tr>
   </tbody>
@@ -1683,7 +1530,6 @@ pd.get_dummies(df)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
       <th>patient_id</th>
       <th>global_num</th>
       <th>birth_year</th>
@@ -1693,6 +1539,7 @@ pd.get_dummies(df)
       <th>contact_number</th>
       <th>n_age</th>
       <th>sex_female</th>
+      <th>sex_male</th>
       <th>...</th>
       <th>infection_case_Shincheonji Church</th>
       <th>infection_case_Suyeong-gu Kindergarten</th>
@@ -1709,16 +1556,16 @@ pd.get_dummies(df)
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
       <td>1000000001</td>
-      <td>2.0</td>
+      <td>2.000000</td>
       <td>1964</td>
-      <td>NaN</td>
-      <td>1.0</td>
-      <td>NaN</td>
-      <td>75.0</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>2.600789e+09</td>
+      <td>75.000000</td>
       <td>57</td>
       <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1733,16 +1580,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>1</th>
-      <td>1</td>
       <td>1000000002</td>
-      <td>5.0</td>
+      <td>5.000000</td>
       <td>1987</td>
-      <td>NaN</td>
-      <td>1.0</td>
-      <td>NaN</td>
-      <td>31.0</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>2.600789e+09</td>
+      <td>31.000000</td>
       <td>34</td>
       <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1757,16 +1604,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>2</th>
-      <td>2</td>
       <td>1000000003</td>
-      <td>6.0</td>
+      <td>6.000000</td>
       <td>1964</td>
-      <td>NaN</td>
-      <td>2.0</td>
+      <td>0.0</td>
+      <td>2.000000</td>
       <td>2.002000e+09</td>
-      <td>17.0</td>
+      <td>17.000000</td>
       <td>57</td>
       <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1781,16 +1628,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>3</th>
-      <td>3</td>
       <td>1000000004</td>
-      <td>7.0</td>
+      <td>7.000000</td>
       <td>1991</td>
-      <td>NaN</td>
-      <td>1.0</td>
-      <td>NaN</td>
-      <td>9.0</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>2.600789e+09</td>
+      <td>9.000000</td>
       <td>30</td>
       <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1805,16 +1652,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>4</th>
-      <td>4</td>
       <td>1000000005</td>
-      <td>9.0</td>
+      <td>9.000000</td>
       <td>1992</td>
-      <td>NaN</td>
-      <td>2.0</td>
+      <td>0.0</td>
+      <td>2.000000</td>
       <td>1.000000e+09</td>
-      <td>2.0</td>
+      <td>2.000000</td>
       <td>29</td>
       <td>1</td>
+      <td>0</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1853,16 +1700,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>2213</th>
-      <td>2213</td>
       <td>6100000085</td>
-      <td>NaN</td>
+      <td>4664.816591</td>
       <td>1990</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.0</td>
+      <td>2.285714</td>
+      <td>2.600789e+09</td>
+      <td>24.128954</td>
       <td>31</td>
       <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1877,16 +1724,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>2214</th>
-      <td>2214</td>
       <td>7000000001</td>
-      <td>139.0</td>
+      <td>139.000000</td>
       <td>1998</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>87.0</td>
+      <td>0.0</td>
+      <td>2.285714</td>
+      <td>2.600789e+09</td>
+      <td>87.000000</td>
       <td>23</td>
       <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1901,16 +1748,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>2215</th>
-      <td>2215</td>
       <td>7000000002</td>
-      <td>222.0</td>
+      <td>222.000000</td>
       <td>1998</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>84.0</td>
+      <td>0.0</td>
+      <td>2.285714</td>
+      <td>2.600789e+09</td>
+      <td>84.000000</td>
       <td>23</td>
       <td>1</td>
+      <td>0</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1925,16 +1772,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>2216</th>
-      <td>2216</td>
       <td>7000000003</td>
-      <td>4345.0</td>
+      <td>4345.000000</td>
       <td>1972</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>21.0</td>
+      <td>0.0</td>
+      <td>2.285714</td>
+      <td>2.600789e+09</td>
+      <td>21.000000</td>
       <td>49</td>
       <td>1</td>
+      <td>0</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1949,16 +1796,16 @@ pd.get_dummies(df)
     </tr>
     <tr>
       <th>2217</th>
-      <td>2217</td>
       <td>7000000004</td>
-      <td>5534.0</td>
+      <td>5534.000000</td>
       <td>1974</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>74.0</td>
+      <td>0.0</td>
+      <td>2.285714</td>
+      <td>2.600789e+09</td>
+      <td>74.000000</td>
       <td>47</td>
       <td>0</td>
+      <td>1</td>
       <td>...</td>
       <td>0</td>
       <td>0</td>
@@ -1973,7 +1820,7 @@ pd.get_dummies(df)
     </tr>
   </tbody>
 </table>
-<p>2218 rows × 196 columns</p>
+<p>2218 rows × 195 columns</p>
 </div>
 
 
@@ -2026,6 +1873,7 @@ The fit model shows an overall accuracy of 80% which is great and indicates our 
 
 ```python
 #df.replace([np.inf, -np.inf], np.nan, inplace=True)
+#without making this conversations,next line was rising error. i don't understand why
 y_train = np.nan_to_num(y_train)
 X_train_scaled = np.nan_to_num(X_train_scaled)
 X_test_scaled = np.nan_to_num(X_test_scaled)
@@ -2050,8 +1898,8 @@ print('Random Forest: Accuracy=%.3f' % (ac))
 print('Random Forest: f1-score=%.3f' % (f1))
 ```
 
-    Random Forest: Accuracy=0.615
-    Random Forest: f1-score=0.606
+    Random Forest: Accuracy=0.631
+    Random Forest: f1-score=0.625
     
 
 ### Create Confusion Matrix Plots
@@ -2125,21 +1973,29 @@ plot_confusion_matrix(cnf_matrix, classes=class_names, normalize=True,
 plt.show()
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-588-22d4a1ec7842> in <module>
-         43 
-         44 # Compute confusion matrix
-    ---> 45 cnf_matrix = confusion_matrix(y_test, y_pred)
-         46 np.set_printoptions(precision=2)
-         47 
+    Confusion matrix, without normalization
+    [[89  0  0 ...  0  0  0]
+     [ 0  0  1 ...  0  0  0]
+     [ 0  0  0 ...  0  0  0]
+     ...
+     [ 0  0  0 ...  0  0  0]
+     [ 0  0  0 ...  0  0  0]
+     [ 0  0  0 ...  0  0  0]]
     
 
-    NameError: name 'y_pred' is not defined
+    <ipython-input-712-22d4a1ec7842>:18: RuntimeWarning: invalid value encountered in true_divide
+      cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+    
 
+    Normalized confusion matrix
+    [[ 1.  0.  0. ...  0.  0.  0.]
+     [ 0.  0.  1. ...  0.  0.  0.]
+     [nan nan nan ... nan nan nan]
+     ...
+     [nan nan nan ... nan nan nan]
+     [ 0.  0.  0. ...  0.  0.  0.]
+     [ 0.  0.  0. ...  0.  0.  0.]]
+    
 
 ### Plot feature importances
 The random forest algorithm can be used as a regression or classification model. In either case it tends to be a bit of a black box, where understanding what's happening under the hood can be difficult. Plotting the feature importances is one way that you can gain a perspective on which features are driving the model predictions.
