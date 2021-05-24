@@ -1969,7 +1969,7 @@ plot_confusion_matrix(cnf_matrix, classes=class_names,
 plt.figure()
 plot_confusion_matrix(cnf_matrix, classes=class_names, normalize=True,
                       title='Normalized confusion matrix')
-#plt.savefig('figures/RF_cm_proportion_multi_class.png', bbox_inches="tight")
+plt.savefig('figures/RF_cm_proportion_multi_class.png', bbox_inches="tight")
 plt.show()
 ```
 
@@ -1983,7 +1983,7 @@ plt.show()
      [ 0  0  0 ...  0  0  0]]
     
 
-    <ipython-input-712-22d4a1ec7842>:18: RuntimeWarning: invalid value encountered in true_divide
+    <ipython-input-714-756e4881a8a7>:18: RuntimeWarning: invalid value encountered in true_divide
       cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
     
 
@@ -2017,6 +2017,15 @@ plt.xlabel('Relative Importance')
 plt.title('Variable Importance')
 plt.show()
 ```
+
+    30
+    
+
+
+    
+![png](output_63_1.png)
+    
+
 
 The popularity of random forest is primarily due to how well it performs in a multitude of data situations. It tends to handle highly correlated features well, where as a linear regression model would not. In this case study we demonstrate the performance ability even with only a few features and almost all of them being highly correlated with each other.
 Random Forest is also used as an efficient way to investigate the importance of a set of features with a large data set. Consider random forest to be one of your first choices when building a decision tree, especially for multiclass classifications.
