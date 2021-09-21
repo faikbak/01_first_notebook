@@ -1,0 +1,238 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[590]:
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import json
+from datetime import datetime
+from datetime import date
+from datetime import time
+import matplotlib.pyplot as plt
+
+
+# #### alternative json reading method
+
+# In[591]:
+
+
+'''
+with open('ultimate_data_challenge.json') as f:
+  data = json.load(f)
+'''
+
+
+# In[592]:
+
+
+log=pd.read_json('logins.json')
+udt=pd.read_json('ultimate_data_challenge.json')
+
+
+# # part I  Exploratory data analysis
+
+# In[593]:
+
+
+log.columns
+
+
+# In[594]:
+
+
+log.sample(5)
+
+
+# In[595]:
+
+
+log.info()
+
+
+# #### sort and login times with 15 min interval
+
+# In[596]:
+
+
+log['count'] = 1
+log.sort_index(inplace=True)
+log_aggregated=pd.DataFrame(log.groupby([pd.Grouper(key='login_time', freq='15Min')]).sum()).reset_index()
+log_aggregated.sample(10)
+
+
+# In[597]:
+
+
+''' another 15minute resempling method
+
+df.resample('15T').asfreq()
+'''
+
+
+# In[598]:
+
+
+#log_agg.set_index('login_time', inplace=True)
+
+
+# In[600]:
+
+
+log_aggregated.isna().sum()
+
+
+# In[601]:
+
+
+log_aggregated.describe()
+
+
+# visualize and observer if there is a correlation with days, i might use it during analyzing
+
+# In[618]:
+
+
+login_days=log_aggregated['login_time'].dt.day_name()
+login_days
+
+
+# In[634]:
+
+
+plt.hist(login_days)
+ax.tick_params(axis ='x', rotation = 45)
+plt.show()
+
+
+# In[ ]:
+
+
+it seems there
+
+
+# visualize and observer if there is a correlation with hours like during midnight,in the morning...
+
+# In[628]:
+
+
+hours=log['login_time'].dt.hour
+hours
+
+
+# ### visualization part
+
+# In[605]:
+
+
+log_aggregated['count'].plot()
+plt.xlabel("X axis label")
+plt.ylabel("Y axis label")
+
+
+# In[606]:
+
+
+log_agg.rolling(window=500).mean().plot()
+plt.show()
+
+
+# there is definitly an upward trend. that's why i need to draw slope line
+
+# when we limit the date interval with only one month, we see that there are small discrete waves and we assume they are weekends because there are nearly 4 of them in a month.
+# 
+# let's do the same for one day and see daily logins 
+
+# In[607]:
+
+
+log_agg.head()
+
+
+# In[608]:
+
+
+log_agg.loc['1970-02-01':'1970-02-02' ]
+
+
+# mostly the app usage,taxi calls are at it's peak after midnight, which is pretty understandable
+
+# now let's see overall smoothed app usage rolling sums together with un smoothed data for 1 week
+
+# In[609]:
+
+
+unsmoothed = login_times_agg['count'].loc['1970-02-01':'1970-02-07']
+smoothed = unsmoothed.rolling(window=100).mean()
+one_week = pd.DataFrame({'unsmoothed':unsmoothed, 'smoothed':smoothed})
+one_week.plot()
+plt.show()
+
+
+# In[610]:
+
+
+login_times_agg.columns
+
+
+# let's check login hours
+
+# first:i couldn't inlcude index column into my analysis, let's create another column with index variables
+
+# In[611]:
+
+
+login_times_agg['index'] = login_times_agg.index
+
+
+# In[612]:
+
+
+pd.to_datetime(login_times_agg['index'])
+
+
+# let's check dtypes
+
+# In[613]:
+
+
+login_times_agg.dtypes
+
+
+# let's see if we can see login hours
+
+# In[614]:
+
+
+login_times_agg['index'].dt.hour
+
+
+# In[615]:
+
+
+hour=login_times_agg['index'].dt.hour
+
+
+# now use histogram to see most active days and hours
+
+# In[616]:
+
+
+plt.figure(figsize=(20, 10))
+plt.bar(hour, hour.Counter, color='grey', width=1)
+plt.xlabel('Hours')
+plt.ylabel('Frequency')
+plt.title('Hours Plot')
+sns.set()
+
+
+# # part II Experiment and metrics design
+# 
+
+# In[ ]:
+
+
+
+
